@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-06-22T19:46:00Z",
+      "error_message": "W sekcji meble nie otwiera się powiększenie (lightbox) dla stolików Kiss i Lips",
+      "file": "src/pages/sztuka/[kategoria].astro, src/components/gallery/GalleryItem.astro",
+      "root_cause": "lightbox: !e.data.video w [kategoria].astro wyłączał lightbox gdy artwork miał wideo. GalleryItem.astro dodatkowo zamieniał Tag na 'div' i nie dodawał atrybutów data-lightbox gdy video był obecny.",
+      "fix": "Zmieniono lightbox: !e.data.video na lightbox: true w [kategoria].astro. W GalleryItem.astro usunięto warunek !video z wyboru Taga i z dodawania atrybutów lightboxa — wideo i lightbox działają teraz niezależnie.",
+      "tags": ["lightbox", "meble", "video", "gallery"],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-22"
+    }
+  ]
+}

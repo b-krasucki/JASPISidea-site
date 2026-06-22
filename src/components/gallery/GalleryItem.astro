@@ -37,14 +37,14 @@ const {
 // Pełnowymiarowy URL do lightboxa (gdy jest realny obraz)
 const lbSrc = cover ? (await getImage({ src: cover, width: 1600 })).src : undefined;
 
-const Tag = video ? 'div' : (href ? 'a' : lightbox ? 'button' : 'div');
+const Tag = href ? 'a' : (lightbox ? 'button' : 'div');
 const slotLabel = `${t('common.photoSlot')} — ${title}`;
 ---
 
 <figure class={`group ${className}`}>
   <Tag
     {...href ? { href } : {}}
-    {...(!video && lightbox) ? {
+    {...lightbox ? {
       type: 'button',
       'data-lightbox': group,
       'data-lb-title': title,

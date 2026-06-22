@@ -31,3 +31,4 @@ Thumbs.db
 
 # media
 assets/showtime/*
+public/videos/*.mp4

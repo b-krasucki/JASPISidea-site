@@ -41,7 +41,7 @@ const items: GalleryEntry[] = works.flatMap((e) => [
     cover: e.data.cover,
     alt: e.data.alt,
     video: e.data.video,
-    lightbox: !e.data.video,
+    lightbox: true,
   },
   ...(e.data.gallery ?? []).map((g) => ({
     title: '',
