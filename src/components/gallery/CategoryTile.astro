@@ -1,0 +1,25 @@
+---
+import { tintStyle, type ArtCategory } from '@/lib/categories';
+
+interface Props {
+  href: string;
+  label: string;
+  count: number;
+  countLabel: string; // np. "prac"
+  tint: ArtCategory;
+}
+const { href, label, count, countLabel, tint } = Astro.props;
+---
+
+<a
+  href={href}
+  class="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden border border-line p-6 transition-colors duration-300 hover:border-accent"
+>
+  <span class="work-placeholder absolute inset-0" style={tintStyle(tint)} aria-hidden="true"></span>
+  <span class="relative">
+    <span class="block font-serif text-[28px] leading-tight">{label}</span>
+    <span class="mt-1 block text-[11px] uppercase tracking-[0.14em] text-ink-muted">
+      {count} {countLabel}
+    </span>
+  </span>
+</a>

@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '@/assets/portrait.jpg';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+---
+
+<section class="container-content border-t border-line py-[clamp(48px,10vh,120px)]">
+  <div class="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16" data-reveal>
+    <div class="relative aspect-[4/5] max-w-sm overflow-hidden border border-line">
+      <Image
+        src={portrait}
+        alt="Katarzyna Krasucka — projektantka wnętrz i artystka"
+        widths={[400, 720]}
+        sizes="(max-width: 768px) 100vw, 360px"
+        loading="lazy"
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div>
+      <p class="eyebrow mb-4">{t('home.aboutEyebrow')}</p>
+      <h2 class="text-[clamp(26px,3.4vw,46px)]">{t('home.aboutTitle')}</h2>
+      <p class="mt-6 max-w-md text-[16px] leading-relaxed text-ink-muted">{t('home.aboutText')}</p>
+      <a href="/o-mnie" class="mt-6 inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.14em] text-accent">
+        {t('home.aboutLink')} <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>

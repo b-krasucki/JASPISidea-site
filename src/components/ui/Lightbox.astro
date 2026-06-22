@@ -1,0 +1,168 @@
+---
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+---
+
+<div
+  id="lightbox"
+  class="fixed inset-0 z-[100] hidden items-center justify-center bg-ink/92 p-4 md:p-10"
+  role="dialog"
+  aria-modal="true"
+  aria-label={t('common.viewMore')}
+>
+  <button
+    type="button"
+    data-lb-close
+    class="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full text-bg/80 transition-colors hover:text-bg"
+    aria-label={t('common.close')}
+  >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    data-lb-prev
+    class="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-bg/80 transition-colors hover:text-bg md:left-6"
+    aria-label={t('common.previous')}
+  >
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    data-lb-next
+    class="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-bg/80 transition-colors hover:text-bg md:right-6"
+    aria-label={t('common.next')}
+  >
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  </button>
+
+  <figure class="flex max-h-full w-full max-w-4xl flex-col items-center">
+    <img id="lb-image" class="hidden max-h-[78vh] w-auto object-contain" alt="" />
+    <div
+      id="lb-placeholder"
+      class="work-placeholder hidden w-full max-w-2xl"
+      style="aspect-ratio:4/3"
+      aria-hidden="true"
+    ></div>
+    <figcaption class="mt-4 flex w-full max-w-2xl items-baseline justify-between gap-4 text-bg">
+      <span id="lb-title" class="font-serif text-[24px] leading-tight"></span>
+      <span id="lb-meta" class="shrink-0 text-[11px] uppercase tracking-[0.14em] text-bg/70"></span>
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+  type Trigger = HTMLElement;
+  const rootEl = document.getElementById('lightbox');
+  if (rootEl) {
+    const root: HTMLElement = rootEl;
+    const img = document.getElementById('lb-image') as HTMLImageElement;
+    const placeholder = document.getElementById('lb-placeholder') as HTMLElement;
+    const titleEl = document.getElementById('lb-title') as HTMLElement;
+    const metaEl = document.getElementById('lb-meta') as HTMLElement;
+    const closeBtn = root.querySelector('[data-lb-close]') as HTMLButtonElement;
+    const prevBtn = root.querySelector('[data-lb-prev]') as HTMLButtonElement;
+    const nextBtn = root.querySelector('[data-lb-next]') as HTMLButtonElement;
+
+    const triggers = Array.from(
+      document.querySelectorAll<Trigger>('[data-lightbox]')
+    );
+    // Grupowanie wg wartości data-lightbox
+    const groups = new Map<string, Trigger[]>();
+    for (const el of triggers) {
+      const g = el.dataset.lightbox ?? 'default';
+      if (!groups.has(g)) groups.set(g, []);
+      groups.get(g)!.push(el);
+    }
+
+    let current: Trigger[] = [];
+    let index = 0;
+    let lastFocused: HTMLElement | null = null;
+
+    function render(el: Trigger) {
+      titleEl.textContent = el.dataset.lbTitle ?? '';
+      metaEl.textContent = el.dataset.lbMeta ?? '';
+      const src = el.dataset.lbSrc;
+      if (src) {
+        img.src = src;
+        img.alt = el.dataset.lbTitle ?? '';
+        img.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+      } else {
+        // Brak realnego zdjęcia — powiększony placeholder wg tintu
+        const tint = el.dataset.lbTint ?? 'wnetrza';
+        placeholder.style.cssText =
+          `aspect-ratio:${el.dataset.lbAspect ?? '4/3'};` +
+          `--tint-1: var(--tint-${tint}-1); --tint-2: var(--tint-${tint}-2);`;
+        placeholder.classList.remove('hidden');
+        img.classList.add('hidden');
+        img.removeAttribute('src');
+      }
+    }
+
+    function open(group: string, i: number) {
+      current = groups.get(group) ?? [];
+      if (!current.length) return;
+      index = i;
+      lastFocused = document.activeElement as HTMLElement;
+      render(current[index]);
+      root.classList.remove('hidden');
+      root.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function close() {
+      root.classList.add('hidden');
+      root.classList.remove('flex');
+      document.body.style.overflow = '';
+      lastFocused?.focus();
+    }
+
+    function step(n: number) {
+      if (!current.length) return;
+      index = (index + n + current.length) % current.length;
+      render(current[index]);
+    }
+
+    for (const [group, els] of groups) {
+      els.forEach((el, i) => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          open(group, i);
+        });
+      });
+    }
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', () => step(-1));
+    nextBtn.addEventListener('click', () => step(1));
+    root.addEventListener('click', (e) => {
+      if (e.target === root) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (root.classList.contains('hidden')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+      else if (e.key === 'Tab') {
+        // Focus trap między: close / prev / next
+        const focusables = [closeBtn, prevBtn, nextBtn];
+        const i = focusables.indexOf(document.activeElement as HTMLButtonElement);
+        e.preventDefault();
+        const dir = e.shiftKey ? -1 : 1;
+        const nextI = (i + dir + focusables.length) % focusables.length;
+        focusables[nextI].focus();
+      }
+    });
+  }
+</script>

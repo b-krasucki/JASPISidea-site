@@ -1,0 +1,113 @@
+---
+// Fonty self-hosted (DESIGN-SPEC §3) — @fontsource, font-display: swap domyślnie
+import '@fontsource/cormorant-garamond/400.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/400-italic.css';
+import '@fontsource/hanken-grotesk/400.css';
+import '@fontsource/hanken-grotesk/500.css';
+import '@fontsource/hanken-grotesk/600.css';
+import '@fontsource/hanken-grotesk/700.css';
+
+import '@/styles/global.css';
+
+import Header from '@/components/ui/Header.astro';
+import Footer from '@/components/ui/Footer.astro';
+import JsonLd from '@/components/seo/JsonLd.astro';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Ścieżka do obrazu OG (względem site). Domyślnie brandowy /og-default.png. */
+  ogImage?: string;
+}
+
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+
+const {
+  title,
+  description = t('site.description'),
+  ogImage = '/og-default.png',
+} = Astro.props;
+
+const pageTitle = title ? `${title} — ${t('site.brand')}` : `${t('site.brand')} — ${t('site.tagline')}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).href : undefined;
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: t('site.brand'),
+  url: Astro.site?.href,
+  inLanguage: lang,
+  description: t('site.description'),
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href={canonical} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t('site.brand')} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+
+    <JsonLd schema={websiteSchema} />
+
+    <!-- Klasa .js wcześnie, by reveal działał jako progressive enhancement (bez FOUC) -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-bg">
+      {t('nav.skipToContent')}
+    </a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Reveal przy scrollu (DESIGN-SPEC §8): IntersectionObserver, threshold .08, rootMargin -7%
+      const els = document.querySelectorAll('[data-reveal]');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.08, rootMargin: '0px 0px -7% 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>

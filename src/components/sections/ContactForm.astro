@@ -1,0 +1,191 @@
+---
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+
+const field =
+  'w-full border border-line bg-transparent px-4 py-3 text-[15px] text-ink ' +
+  'transition-colors placeholder:text-ink-faint focus:border-accent focus:outline-none ' +
+  'aria-[invalid=true]:border-red-700';
+const labelCls = 'mb-2 block text-[12px] uppercase tracking-[0.14em] text-ink-muted';
+const errCls = 'mt-1 hidden text-[12px] text-red-700';
+---
+
+<form
+  id="contact-form"
+  class="max-w-2xl"
+  novalidate
+  data-v-required={t('contact.vRequired')}
+  data-v-email={t('contact.vEmail')}
+  data-v-rodo={t('contact.vRodo')}
+  data-msg-sending={t('contact.sending')}
+  data-msg-error={t('contact.errorText')}
+  data-msg-notconfigured={t('contact.errNotConfigured')}
+>
+  <!-- Honeypot (antyspam) — ukryty przed ludźmi i czytnikami ekranu -->
+  <div class="absolute left-[-9999px]" aria-hidden="true">
+    <label>Nie wypełniaj tego pola
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+    </label>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+    <div>
+      <label class={labelCls} for="cf-name">{t('contact.name')}</label>
+      <input class={field} type="text" id="cf-name" name="name" required autocomplete="name"
+        placeholder={t('contact.namePlaceholder')} aria-describedby="cf-name-err" />
+      <p class={errCls} id="cf-name-err" data-err-for="name"></p>
+    </div>
+    <div>
+      <label class={labelCls} for="cf-email">{t('contact.email')}</label>
+      <input class={field} type="email" id="cf-email" name="email" required autocomplete="email"
+        placeholder={t('contact.emailPlaceholder')} aria-describedby="cf-email-err" />
+      <p class={errCls} id="cf-email-err" data-err-for="email"></p>
+    </div>
+  </div>
+
+  <div class="mt-6">
+    <label class={labelCls} for="cf-subject">{t('contact.subject')}</label>
+    <select class={field} id="cf-subject" name="subject">
+      <option value={t('contact.subjectInterior')}>{t('contact.subjectInterior')}</option>
+      <option value={t('contact.subjectArtwork')}>{t('contact.subjectArtwork')}</option>
+      <option value={t('contact.subjectOther')}>{t('contact.subjectOther')}</option>
+    </select>
+  </div>
+
+  <div class="mt-6">
+    <label class={labelCls} for="cf-message">{t('contact.message')}</label>
+    <textarea class={`${field} min-h-40 resize-y`} id="cf-message" name="message" required rows="6"
+      placeholder={t('contact.messagePlaceholder')} aria-describedby="cf-message-err"></textarea>
+    <p class={errCls} id="cf-message-err" data-err-for="message"></p>
+  </div>
+
+  <div class="mt-6">
+    <label class="flex items-start gap-3 text-[14px] leading-relaxed text-ink-muted">
+      <input type="checkbox" id="cf-rodo" name="rodo" required
+        class="mt-1 h-4 w-4 shrink-0 accent-[var(--accent)]" aria-describedby="cf-rodo-err" />
+      <span>{t('contact.rodo')}</span>
+    </label>
+    <p class={errCls} id="cf-rodo-err" data-err-for="rodo"></p>
+  </div>
+
+  <div class="mt-8 flex flex-wrap items-center gap-5">
+    <button type="submit" id="cf-submit"
+      class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-[30px] py-[15px] font-sans text-[13px] font-semibold uppercase tracking-[0.14em] text-bg transition-colors hover:bg-accent-dark disabled:opacity-60">
+      {t('contact.submit')}
+    </button>
+  </div>
+
+  <!-- Komunikat statusu (a11y: aria-live) -->
+  <p id="cf-status" role="status" aria-live="polite" class="mt-5 hidden text-[14px]"></p>
+</form>
+
+<!-- Sukces (pokazywany po wysłaniu, zastępuje formularz) -->
+<div id="cf-success" class="hidden max-w-2xl border border-line bg-surface p-8" role="status" aria-live="polite">
+  <h2 class="font-serif text-[28px]">{t('contact.successTitle')}</h2>
+  <p class="mt-3 text-[15px] text-ink-muted">{t('contact.successText')}</p>
+</div>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    const endpoint = import.meta.env.PUBLIC_CONTACT_FORM_ENDPOINT as string | undefined;
+    const accessKey = import.meta.env.PUBLIC_CONTACT_FORM_ACCESS_KEY as string | undefined;
+
+    const submitBtn = document.getElementById('cf-submit') as HTMLButtonElement;
+    const statusEl = document.getElementById('cf-status') as HTMLElement;
+    const successEl = document.getElementById('cf-success') as HTMLElement;
+    const submitLabel = submitBtn.textContent ?? '';
+
+    const msg = {
+      required: form.dataset.vRequired!,
+      email: form.dataset.vEmail!,
+      rodo: form.dataset.vRodo!,
+      sending: form.dataset.msgSending!,
+      error: form.dataset.msgError!,
+      notConfigured: form.dataset.msgNotconfigured!,
+    };
+
+    const setError = (name: string, text: string) => {
+      const input = form.elements.namedItem(name) as HTMLElement | null;
+      const errEl = form.querySelector<HTMLElement>(`[data-err-for="${name}"]`);
+      if (input) input.setAttribute('aria-invalid', text ? 'true' : 'false');
+      if (errEl) {
+        errEl.textContent = text;
+        errEl.classList.toggle('hidden', !text);
+      }
+    };
+
+    const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+    const validate = (): boolean => {
+      let ok = true;
+      const data = new FormData(form);
+      const name = (data.get('name') as string ?? '').trim();
+      const email = (data.get('email') as string ?? '').trim();
+      const message = (data.get('message') as string ?? '').trim();
+      const rodo = data.get('rodo');
+
+      const fail = (field: string, text: string) => {
+        setError(field, text);
+        ok = false;
+      };
+
+      setError('name', ''); setError('email', ''); setError('message', ''); setError('rodo', '');
+      if (!name) fail('name', msg.required);
+      if (!email) fail('email', msg.required);
+      else if (!isEmail(email)) fail('email', msg.email);
+      if (!message) fail('message', msg.required);
+      if (!rodo) fail('rodo', msg.rodo);
+
+      if (!ok) form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+      return ok;
+    };
+
+    const showStatus = (text: string, isError: boolean) => {
+      statusEl.textContent = text;
+      statusEl.classList.remove('hidden');
+      statusEl.classList.toggle('text-red-700', isError);
+      statusEl.classList.toggle('text-ink-muted', !isError);
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.classList.add('hidden');
+
+      // Honeypot — ciche porzucenie (bot)
+      if ((form.elements.namedItem('_gotcha') as HTMLInputElement)?.value) return;
+      if (!validate()) return;
+
+      if (!endpoint || !accessKey) {
+        showStatus(msg.notConfigured, true);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = msg.sending;
+      showStatus(msg.sending, false);
+
+      try {
+        const payload = Object.fromEntries(new FormData(form).entries());
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ access_key: accessKey, ...payload }),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && json.success !== false) {
+          form.classList.add('hidden');
+          successEl.classList.remove('hidden');
+          successEl.focus?.();
+        } else {
+          throw new Error('submit failed');
+        }
+      } catch {
+        showStatus(msg.error, true);
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitLabel;
+      }
+    });
+  }
+</script>

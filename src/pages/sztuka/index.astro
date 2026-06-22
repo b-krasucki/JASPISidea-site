@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import GalleryLayout from '@/layouts/GalleryLayout.astro';
+import CategoryTile from '@/components/gallery/CategoryTile.astro';
+import { ART_CATEGORIES, artCategoryLabel } from '@/lib/categories';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+
+const artworks = await getCollection('artworks');
+const counts = Object.fromEntries(
+  ART_CATEGORIES.map((cat) => [cat, artworks.filter((a) => a.data.category === cat).length])
+);
+---
+
+<GalleryLayout
+  title={t('artPage.title')}
+  eyebrow={t('artPage.eyebrow')}
+  description={t('artPage.intro')}
+>
+  <section class="container-content pb-24">
+    <div class="grid grid-cols-1 gap-[clamp(18px,2.6vw,32px)] sm:grid-cols-2 lg:grid-cols-3">
+      {ART_CATEGORIES.map((cat) => (
+        <CategoryTile
+          href={`/sztuka/${cat}`}
+          label={artCategoryLabel(cat, lang)}
+          count={counts[cat]}
+          countLabel={t('artPage.works')}
+          tint={cat}
+        />
+      ))}
+    </div>
+  </section>
+</GalleryLayout>

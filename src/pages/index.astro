@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import Pillars from '@/components/sections/Pillars.astro';
+import SelectedWorks from '@/components/sections/SelectedWorks.astro';
+import AboutTeaser from '@/components/sections/AboutTeaser.astro';
+import ContactCTA from '@/components/sections/ContactCTA.astro';
+import JsonLd from '@/components/seo/JsonLd.astro';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Katarzyna Krasucka',
+  alternateName: t('site.brand'),
+  jobTitle: t('about.role'),
+  url: Astro.site?.href,
+  email: t('footer.email'),
+  description: t('site.description'),
+};
+---
+
+<BaseLayout>
+  <JsonLd slot="head" schema={personSchema} />
+  <Hero />
+  <Pillars />
+  <SelectedWorks />
+  <AboutTeaser />
+  <ContactCTA />
+</BaseLayout>

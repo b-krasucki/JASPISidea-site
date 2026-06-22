@@ -1,0 +1,29 @@
+/* ============================================================
+   Tokeny designu — Jaspis Idea (DESIGN-SPEC §2)
+   Jedyne źródło prawdy dla kolorów marki. Akcent = jedna zmienna (--accent).
+   Mapowanie na utilities Tailwind w: src/styles/global.css
+   ============================================================ */
+:root {
+  /* Kolory — tła i tekst */
+  --color-bg:        #FAF8F4; /* ciepła off-white, główne tło */
+  --color-surface:   #F4F0E8; /* stopka / sekcje wyróżnione */
+  --color-ink:       #1C1B19; /* grafit/atrament — tekst główny */
+  --color-ink-muted: #6F6B63; /* tekst drugorzędny */
+  --color-ink-faint: #726D63; /* podpisy, meta, © — przyciemnione do WCAG AA (≥4.5:1 na bg i surface) */
+  --color-line:      rgba(28,27,25,.12); /* hairline / bordery */
+  --color-line-soft: rgba(28,27,25,.08);
+  --color-placeholder-border: #E4DECF;
+
+  /* Akcent — JEDNA zmienna do zmiany po finalnym brandingu */
+  --accent:      #7e406b; /* śliwkowo-różowy (wybrany) */
+  --accent-dark: #693559; /* hover na przyciskach */
+
+  /* Tinty placeholderów wg kategorii (niska saturacja) */
+  --tint-wnetrza-1:#E7E0D3;   --tint-wnetrza-2:#F0EBE2;   --tint-wnetrza-sw:#C9C1AE;
+  --tint-malarstwo-1:#E6D6BE; --tint-malarstwo-2:#F0E7D6; --tint-malarstwo-sw:#C9B48C;
+  --tint-meble-1:#DDCFBB;     --tint-meble-2:#EADFCD;     --tint-meble-sw:#BFAD90;
+  --tint-sciany-1:#C6D5CE;    --tint-sciany-2:#DBE4DE;    --tint-sciany-sw:#3E6B5E;
+  --tint-rysunki-1:#E1DED7;   --tint-rysunki-2:#ECEAE4;   --tint-rysunki-sw:#BFBAAE;
+  --tint-dekoracje-1:#E3DACB; --tint-dekoracje-2:#EFE8DB; --tint-dekoracje-sw:#C2B49A;
+  --tint-mozaiki-1:#D4E0DC;   --tint-mozaiki-2:#E4ECEB;   --tint-mozaiki-sw:#7EA8A0;
+}

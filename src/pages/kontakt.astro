@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContactForm from '@/components/sections/ContactForm.astro';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+const email = t('footer.email');
+---
+
+<BaseLayout title={t('contact.title')} description={t('contact.intro')}>
+  <article class="container-content py-16">
+    <header class="mb-12 max-w-2xl">
+      <p class="eyebrow mb-4">{t('contact.eyebrow')}</p>
+      <h1 class="text-[clamp(36px,6vw,72px)] leading-[1.02]">{t('contact.title')}</h1>
+      <p class="mt-6 text-[16px] leading-relaxed text-ink-muted">{t('contact.intro')}</p>
+    </header>
+
+    <ContactForm />
+
+    <p class="mt-10 text-[14px] text-ink-muted">
+      {t('contact.orDirect')}{' '}
+      <a href={`mailto:${email}`} class="text-accent underline underline-offset-4">{email}</a>
+    </p>
+  </article>
+</BaseLayout>

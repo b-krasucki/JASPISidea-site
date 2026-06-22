@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+import wnetrzaImg from '../../content/photos/interiors/herbarium-realizacja/003.jpg';
+import sztukaImg from '../../content/photos/artworks/meble/kiss-cover.jpg';
+
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+
+const pillars = [
+  {
+    href: '/wnetrza',
+    title: t('home.pillarInteriorsTitle'),
+    desc: t('home.pillarInteriorsDesc'),
+    img: wnetrzaImg,
+    alt: 'Projekt wnętrza — Herbarium, realizacja',
+  },
+  {
+    href: '/sztuka',
+    title: t('home.pillarArtTitle'),
+    desc: t('home.pillarArtDesc'),
+    img: sztukaImg,
+    alt: 'Mebel Kiss — JASPISidea',
+  },
+];
+---
+
+<section class="container-content border-t border-line py-[clamp(48px,10vh,120px)]" data-reveal>
+  <p class="eyebrow mb-10">{t('home.pillarsEyebrow')}</p>
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+    {pillars.map((p) => (
+      <a
+        href={p.href}
+        class="group relative flex aspect-[16/10] flex-col justify-end overflow-hidden border border-line p-8 transition-colors duration-300 hover:border-accent"
+      >
+        <Image
+          src={p.img}
+          alt={p.alt}
+          widths={[600, 900, 1200]}
+          sizes="(max-width: 768px) 100vw, 50vw"
+          loading="lazy"
+          class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+        />
+        <span
+          class="absolute inset-0"
+          style="background: linear-gradient(to top, rgba(28,27,25,.82) 0%, rgba(28,27,25,.28) 55%, transparent 100%)"
+          aria-hidden="true"
+        ></span>
+        <span class="relative max-w-sm">
+          <span class="block font-serif text-[clamp(26px,3vw,40px)] leading-tight text-[var(--color-bg)]">{p.title}</span>
+          <span class="mt-3 block text-[14px] leading-relaxed" style="color: rgba(250,248,244,.78)">{p.desc}</span>
+          <span class="mt-4 inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.14em]" style="color: rgba(250,248,244,.9)">
+            {t('common.viewAll')} <span aria-hidden="true">→</span>
+          </span>
+        </span>
+      </a>
+    ))}
+  </div>
+</section>

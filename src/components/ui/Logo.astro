@@ -1,0 +1,19 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/jaspis-idea-logo.png';
+
+interface Props {
+  /** Wysokość logo w px (szerokość auto wg proporcji). Domyślnie 30 (DESIGN-SPEC §6). */
+  height?: number;
+  class?: string;
+}
+const { height = 50, class: className = '' } = Astro.props;
+---
+
+<Image
+  src={logo}
+  alt="Jaspis Idea"
+  loading="eager"
+  class={`w-auto ${className}`}
+  style={`height:${height}px`}
+/>

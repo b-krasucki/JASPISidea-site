@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import GalleryItem from '@/components/gallery/GalleryItem.astro';
+import { artCategoryLabel, type ArtCategory, type TintKey } from '@/lib/categories';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+
+interface Item {
+  title: string;
+  meta: string;
+  tint: TintKey;
+  href: string;
+  isUV: boolean;
+  cover?: ImageMetadata;
+  alt?: string;
+  order: number;
+}
+
+const interiors = await getCollection('interiors', (e) => e.data.featured);
+const artworks = await getCollection('artworks', (e) => e.data.featured);
+
+const items: Item[] = [
+  ...interiors.map((e) => ({
+    title: e.data.title,
+    meta: `${t('nav.interiors')} · ${e.data.year}`,
+    tint: 'wnetrza' as TintKey,
+    href: `/wnetrza/${e.id}`,
+    isUV: false,
+    cover: e.data.cover,
+    alt: e.data.alt,
+    order: e.data.order ?? 99,
+  })),
+  ...artworks.map((e) => ({
+    title: e.data.title,
+    meta: `${artCategoryLabel(e.data.category as ArtCategory, lang)}${e.data.year ? ` · ${e.data.year}` : ''}`,
+    tint: e.data.category as TintKey,
+    href: `/sztuka/${e.data.category}`,
+    isUV: e.data.isUV,
+    cover: e.data.cover,
+    alt: e.data.alt,
+    order: e.data.order ?? 99,
+  })),
+].sort((a, b) => a.order - b.order);
+
+// Asymetryczny grid: 3 rzędy par o różnych proporcjach (DESIGN-SPEC §9, Wariant A)
+const rows = [
+  { cols: 'md:grid-cols-[58fr_42fr]', items: items.slice(0, 2) },
+  { cols: 'md:grid-cols-[38fr_62fr]', items: items.slice(2, 4) },
+  { cols: 'md:grid-cols-[50fr_50fr]', items: items.slice(4, 6) },
+].filter((r) => r.items.length > 0);
+---
+
+<section class="container-content border-t border-line py-[clamp(48px,10vh,120px)]">
+  <div class="mb-10 flex items-end justify-between gap-6" data-reveal>
+    <div>
+      <p class="eyebrow mb-3">{t('home.selectedEyebrow')}</p>
+      <h2 class="text-[clamp(26px,3.4vw,46px)]">{t('home.selectedTitle')}</h2>
+    </div>
+    <p class="hidden max-w-xs text-right text-[14px] text-ink-muted sm:block">{t('home.selectedIntro')}</p>
+  </div>
+
+  <div class="space-y-[clamp(18px,2.6vw,32px)]">
+    {rows.map((row) => (
+      <div class={`grid grid-cols-1 gap-[clamp(18px,2.6vw,32px)] ${row.cols}`} data-reveal>
+        {row.items.map((it) => (
+          <GalleryItem
+            title={it.title}
+            meta={it.meta}
+            tint={it.tint}
+            href={it.href}
+            isUV={it.isUV}
+            cover={it.cover}
+            alt={it.alt}
+            aspect="16/11"
+          />
+        ))}
+      </div>
+    ))}
+  </div>
+</section>

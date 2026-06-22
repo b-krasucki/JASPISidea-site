@@ -1,0 +1,19 @@
+---
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+
+interface Props {
+  /** Tekst badge; domyślnie etykieta UV z i18n. */
+  label?: string;
+  class?: string;
+}
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+const { label = t('badge.uv'), class: className = '' } = Astro.props;
+---
+
+<!-- Pill UV (DESIGN-SPEC §4): bg-accent, biały tekst, 10px, tracking .16em, weight 700 -->
+<span
+  class={`inline-flex items-center rounded-full bg-accent px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.16em] text-white ${className}`}
+>
+  {label}
+</span>

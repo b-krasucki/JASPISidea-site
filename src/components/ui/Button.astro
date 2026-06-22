@@ -1,0 +1,21 @@
+---
+interface Props {
+  href?: string;
+  type?: 'button' | 'submit';
+  class?: string;
+}
+const { href, type = 'button', class: className = '' } = Astro.props;
+
+// CTA pill (DESIGN-SPEC §6): bg-accent, tekst w kolorze tła, radius 999px, hover -> accent-dark
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-full bg-accent px-[30px] py-[15px] ' +
+  'font-sans text-[13px] font-semibold uppercase tracking-[0.14em] text-bg ' +
+  'transition-colors duration-200 hover:bg-accent-dark focus-visible:bg-accent-dark';
+const cls = `${base} ${className}`;
+---
+
+{href ? (
+  <a href={href} class={cls}><slot /></a>
+) : (
+  <button type={type} class={cls}><slot /></button>
+)}

@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import GalleryLayout from '@/layouts/GalleryLayout.astro';
+import GalleryItem from '@/components/gallery/GalleryItem.astro';
+import Lightbox from '@/components/ui/Lightbox.astro';
+import { ART_CATEGORIES, artCategoryLabel, type ArtCategory } from '@/lib/categories';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+
+export async function getStaticPaths() {
+  return ART_CATEGORIES.map((cat) => ({ params: { kategoria: cat } }));
+}
+
+const { kategoria } = Astro.params;
+const cat = kategoria as ArtCategory;
+
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+
+const works = (await getCollection('artworks', (e) => e.data.category === cat)).sort(
+  (a, b) => (b.data.year ?? 0) - (a.data.year ?? 0)
+);
+
+const label = artCategoryLabel(cat, lang);
+---
+
+<GalleryLayout title={label} eyebrow={t('artPage.eyebrow')}>
+  <section class="container-content pb-24">
+    <a href="/sztuka" class="mb-10 inline-block text-[12px] uppercase tracking-[0.14em] text-ink-muted transition-colors hover:text-accent">
+      <span aria-hidden="true">←</span> {t('artPage.title')}
+    </a>
+
+    {works.length === 0 ? (
+      <p class="text-ink-muted">{t('common.empty')}</p>
+    ) : (
+      <div class="grid grid-cols-1 gap-[clamp(18px,2.6vw,32px)] sm:grid-cols-2 lg:grid-cols-3">
+        {works.map((e) => (
+          <GalleryItem
+            title={e.data.title}
+            meta={[e.data.medium, e.data.year].filter(Boolean).join(' · ')}
+            tint={cat}
+            isUV={e.data.isUV}
+            cover={e.data.cover}
+            alt={e.data.alt}
+            video={e.data.video}
+            lightbox={!e.data.video}
+            group={cat}
+            aspect="1/1"
+          />
+        ))}
+      </div>
+    )}
+  </section>
+
+  <Lightbox />
+</GalleryLayout>

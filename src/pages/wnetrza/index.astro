@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import GalleryLayout from '@/layouts/GalleryLayout.astro';
+import GalleryItem from '@/components/gallery/GalleryItem.astro';
+import { interiorCategoryLabel, type InteriorCategory } from '@/lib/categories';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+
+const interiors = (await getCollection('interiors')).sort(
+  (a, b) => b.data.year - a.data.year
+);
+---
+
+<GalleryLayout
+  title={t('interiorsPage.title')}
+  eyebrow={t('interiorsPage.eyebrow')}
+  description={t('interiorsPage.intro')}
+>
+  <section class="container-content pb-24">
+    {interiors.length === 0 ? (
+      <p class="text-ink-muted">{t('common.empty')}</p>
+    ) : (
+      <div class="grid grid-cols-1 gap-[clamp(18px,2.6vw,32px)] sm:grid-cols-2">
+        {interiors.map((e) => (
+          <GalleryItem
+            title={e.data.title}
+            meta={`${interiorCategoryLabel(e.data.category as InteriorCategory, lang)} · ${e.data.year}`}
+            tint="wnetrza"
+            href={`/wnetrza/${e.id}`}
+            cover={e.data.cover}
+            alt={e.data.alt}
+            aspect="4/3"
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</GalleryLayout>

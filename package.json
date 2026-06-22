@@ -1,0 +1,30 @@
+{
+  "name": "jaspisidea-portfolio",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "overrides": {
+    "vite": "^6.4.3"
+  },
+  "scripts": {
+    "dev": "astro dev --host",
+    "start": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "generate:og": "node scripts/generate-og.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/cormorant-garamond": "^5.2.11",
+    "@fontsource/hanken-grotesk": "^5.2.8",
+    "@tailwindcss/vite": "~4.1",
+    "astro": "^5.18.2",
+    "tailwindcss": "~4.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,18 @@
+---
+import Button from '@/components/ui/Button.astro';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+const email = t('footer.email');
+---
+
+<section class="container-content border-t border-line py-[clamp(48px,12vh,140px)] text-center" data-reveal>
+  <p class="eyebrow mb-6">{t('home.contactEyebrow')}</p>
+  <h2 class="mx-auto max-w-2xl text-[clamp(28px,4vw,52px)] leading-tight">{t('home.contactTitle')}</h2>
+  <div class="mt-10 flex flex-col items-center gap-5">
+    <Button href="/kontakt">{t('home.contactCta')}</Button>
+    <a href={`mailto:${email}`} class="text-[14px] tracking-wide text-ink-muted underline underline-offset-4 hover:text-accent">
+      {email}
+    </a>
+  </div>
+</section>

@@ -1,0 +1,90 @@
+---
+import Logo from './Logo.astro';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+
+const nav = [
+  { href: '/wnetrza', label: t('nav.interiors') },
+  { href: '/sztuka', label: t('nav.art') },
+  { href: '/o-mnie', label: t('nav.about') },
+  { href: '/kontakt', label: t('nav.contact'), accent: true },
+];
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-line backdrop-blur-md"
+  style="background-color: rgba(250,248,244,.82)"
+>
+  <div class="container-content flex h-16 items-center justify-between">
+    <a href="/" aria-label={t('site.brand')} class="flex items-center">
+      <Logo height={50} />
+    </a>
+
+    <!-- Nawigacja desktop -->
+    <nav class="hidden items-center gap-8 md:flex" aria-label={t('nav.primary')}>
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class={`text-[12px] uppercase tracking-[0.14em] transition-colors hover:text-accent ${
+            item.accent ? 'text-accent' : 'text-ink'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+      <span class="text-[12px] uppercase tracking-[0.14em] text-ink-faint" aria-label={t('lang.switchLabel')}>
+        {t('lang.pl')} <span aria-hidden="true">/</span> {t('lang.da')}
+      </span>
+    </nav>
+
+    <!-- Hamburger mobile -->
+    <button
+      type="button"
+      id="menu-toggle"
+      class="md:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label={t('nav.openMenu')}
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <line x1="3" y1="7" x2="21" y2="7" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="17" x2="21" y2="17" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menu mobile (rozwijane) -->
+  <nav
+    id="mobile-menu"
+    class="hidden border-t border-line md:hidden"
+    aria-label={t('nav.primary')}
+  >
+    <div class="container-content flex flex-col gap-1 py-4">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class={`py-2 text-[13px] uppercase tracking-[0.14em] ${
+            item.accent ? 'text-accent' : 'text-ink'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+      <span class="py-2 text-[13px] uppercase tracking-[0.14em] text-ink-faint">
+        {t('lang.pl')} <span aria-hidden="true">/</span> {t('lang.da')}
+      </span>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>

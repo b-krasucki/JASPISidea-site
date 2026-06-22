@@ -1,0 +1,138 @@
+{
+  "site": {
+    "brand": "Jaspis Idea",
+    "tagline": "Dwa światy, jedna ręka.",
+    "description": "Portfolio Katarzyny Krasuckiej (Jaspis Idea) — projektowanie wnętrz i sztuka: malarstwo, meble, dekoracje, malarstwo ścienne i rysunki."
+  },
+  "nav": {
+    "interiors": "Wnętrza",
+    "art": "Sztuka",
+    "about": "O mnie",
+    "contact": "Kontakt",
+    "skipToContent": "Przejdź do treści",
+    "primary": "Nawigacja główna",
+    "openMenu": "Otwórz menu",
+    "closeMenu": "Zamknij menu"
+  },
+  "lang": {
+    "pl": "PL",
+    "da": "DA",
+    "switchLabel": "Zmień język"
+  },
+  "footer": {
+    "navHeading": "Nawigacja",
+    "contactHeading": "Kontakt",
+    "email": "hej@jaspisidea.pl",
+    "instagram": "Instagram",
+    "etsy": "Etsy",
+    "rights": "Wszelkie prawa zastrzeżone."
+  },
+  "common": {
+    "viewMore": "Więcej",
+    "viewProject": "Zobacz projekt",
+    "viewAll": "Zobacz wszystkie",
+    "backToTop": "Do góry",
+    "loading": "Ładowanie…",
+    "empty": "Wkrótce nowe prace.",
+    "previous": "Poprzednie",
+    "next": "Następne",
+    "close": "Zamknij",
+    "photoSlot": "FOTO"
+  },
+  "badge": {
+    "uv": "UV"
+  },
+  "categories": {
+    "malarstwo": "Malarstwo",
+    "meble": "Meble",
+    "dekoracje": "Dekoracje",
+    "sciany": "Ściany",
+    "rysunki": "Rysunki",
+    "mozaiki": "Mozaiki"
+  },
+  "interiorCategories": {
+    "mieszkanie": "Mieszkanie",
+    "dom": "Dom",
+    "komercyjne": "Komercyjne",
+    "inne": "Inne"
+  },
+  "home": {
+    "heroEyebrow": "Projektowanie wnętrz · Sztuka",
+    "heroLine1": "Dwa światy,",
+    "heroLine2": "jedna ręka.",
+    "heroIntro": "Wnętrza i sztuka tworzone z jednej wrażliwości — od spokojnych renderów po świecące malarstwo ścienne.",
+    "heroCta": "Porozmawiajmy",
+    "pillarsEyebrow": "Dwa filary",
+    "pillarInteriorsTitle": "Projektowanie wnętrz",
+    "pillarInteriorsDesc": "Przestrzenie ciepłe i przemyślane — mieszkania, domy i wnętrza komercyjne.",
+    "pillarArtTitle": "Sztuka",
+    "pillarArtDesc": "Malarstwo, meble, dekoracje, malarstwo ścienne i rysunki — w tym świecące realizacje UV.",
+    "selectedEyebrow": "Wybrane prace",
+    "selectedTitle": "Kuratorowany wybór",
+    "selectedIntro": "Sześć realizacji z różnych obszarów, 2022–2025.",
+    "aboutEyebrow": "O mnie",
+    "aboutTitle": "Katarzyna Krasucka",
+    "aboutText": "Projektantka i artystka. Łączę projektowanie wnętrz z własną praktyką artystyczną — traktuję przestrzeń i obraz jako dwa języki tej samej idei.",
+    "aboutLink": "Więcej o mnie",
+    "contactEyebrow": "Kontakt",
+    "contactTitle": "Masz pomysł albo przestrzeń do ożywienia?",
+    "contactCta": "Napisz do mnie"
+  },
+  "interiorsPage": {
+    "title": "Wnętrza",
+    "eyebrow": "Projektowanie wnętrz",
+    "intro": "Projekty wnętrz mieszkalnych i komercyjnych — ciepłe, spokojne, dopasowane do ludzi, którzy w nich żyją."
+  },
+  "artPage": {
+    "title": "Sztuka",
+    "eyebrow": "Sztuka",
+    "intro": "Pięć obszarów praktyki artystycznej. Wybierz kategorię, by zobaczyć prace.",
+    "works": "prac"
+  },
+  "projectMeta": {
+    "year": "Rok",
+    "location": "Lokalizacja",
+    "scope": "Zakres",
+    "medium": "Technika",
+    "dimensions": "Wymiary",
+    "category": "Kategoria"
+  },
+  "about": {
+    "eyebrow": "O mnie",
+    "title": "Katarzyna Krasucka",
+    "role": "Projektantka wnętrz i artystka",
+    "lead": "Pracuję na styku dwóch światów — projektowania wnętrz i sztuki. Dla mnie to jeden język: szukanie harmonii między przestrzenią, materiałem a emocją.",
+    "bio1": "Tworzę wnętrza ciepłe i przemyślane — takie, w których chce się być. Równolegle rozwijam własną praktykę artystyczną: malarstwo olejne, meble, przedmioty dekoracyjne, malarstwo ścienne (w tym świecące realizacje UV) i rysunki.",
+    "bio2": "Te dwa obszary nieustannie się przenikają. Projektując przestrzeń, myślę jak malarka; malując, myślę o przestrzeni. Stąd nazwa Jaspis Idea — dwa światy, jedna ręka.",
+    "approachHeading": "Podejście",
+    "approachText": "Mniej, ale lepiej. Naturalne materiały, stonowana paleta, miejsce na światło i oddech. Każdy projekt zaczynam od słuchania — ludzi i miejsca.",
+    "contactCta": "Porozmawiajmy"
+  },
+  "contact": {
+    "eyebrow": "Kontakt",
+    "title": "Napisz do mnie",
+    "intro": "Masz pomysł, przestrzeń do ożywienia albo pytanie o pracę? Wypełnij formularz lub napisz bezpośrednio.",
+    "name": "Imię",
+    "namePlaceholder": "Jak się do Ciebie zwracać?",
+    "email": "E-mail",
+    "emailPlaceholder": "twoj@email.pl",
+    "subject": "Temat",
+    "subjectInterior": "Projekt wnętrza",
+    "subjectArtwork": "Zapytanie o pracę",
+    "subjectOther": "Inne",
+    "message": "Wiadomość",
+    "messagePlaceholder": "Napisz, w czym mogę pomóc…",
+    "rodo": "Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na zapytanie.",
+    "submit": "Wyślij wiadomość",
+    "sending": "Wysyłanie…",
+    "orDirect": "lub napisz bezpośrednio:",
+    "successTitle": "Dziękuję!",
+    "successText": "Wiadomość została wysłana. Odezwę się najszybciej, jak to możliwe.",
+    "errorTitle": "Coś poszło nie tak",
+    "errorText": "Nie udało się wysłać wiadomości. Spróbuj ponownie lub napisz na podany adres e-mail.",
+    "errNotConfigured": "Formularz nie jest jeszcze skonfigurowany. Napisz proszę na podany adres e-mail.",
+    "vRequired": "To pole jest wymagane.",
+    "vEmail": "Podaj poprawny adres e-mail.",
+    "vRodo": "Zgoda jest wymagana."
+  }
+}

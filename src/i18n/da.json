@@ -1,0 +1,10 @@
+{
+  "_comment": "Placeholder Faza 2 — tłumaczenia duńskie. Brakujące klucze fallbackują do pl.json (patrz utils.ts).",
+  "site": {
+    "brand": "Jaspis Idea",
+    "tagline": "To verdener, én hånd."
+  },
+  "about": {
+    "role": "Indretningsdesigner og kunstner"
+  }
+}

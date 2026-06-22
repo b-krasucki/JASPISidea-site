@@ -1,0 +1,31 @@
+# build output
+dist/
+.output/
+doc/
+assets/showtime/*
+
+# lighthouse reports
+lh-*.json
+lh-*.html
+
+# astro
+.astro/
+
+# dependencies
+node_modules/
+
+# env
+.env
+.env.production
+.env.local
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# os / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,20 @@
+---
+import Button from '@/components/ui/Button.astro';
+import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
+const t = useTranslations(lang);
+---
+
+<section class="container-content flex min-h-[78vh] flex-col items-center justify-center py-20 text-center">
+  <p class="eyebrow mb-8" data-reveal>{t('home.heroEyebrow')}</p>
+  <h1 class="text-[clamp(40px,7.4vw,92px)] leading-[1.02]" data-reveal>
+    <span class="block">{t('home.heroLine1')}</span>
+    <span class="block italic font-normal">{t('home.heroLine2')}</span>
+  </h1>
+  <p class="mt-8 max-w-xl text-[16px] leading-relaxed text-ink-muted" data-reveal>
+    {t('home.heroIntro')}
+  </p>
+  <div class="mt-10" data-reveal>
+    <Button href="/kontakt">{t('home.heroCta')}</Button>
+  </div>
+</section>

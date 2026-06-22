@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Eyebrow / etykieta sekcji (DESIGN-SPEC §3 wzorzec wersalików) */
+  eyebrow?: string;
+  ogImage?: string;
+}
+const { title, description, eyebrow, ogImage } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} ogImage={ogImage}>
+  <slot name="head" slot="head" />
+  <section class="container-content pt-16 pb-8">
+    {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
+    <h1 class="text-[clamp(32px,5vw,56px)]">{title}</h1>
+    {description && <p class="mt-4 max-w-2xl text-[16px] text-ink-muted">{description}</p>}
+  </section>
+  <slot />
+</BaseLayout>
