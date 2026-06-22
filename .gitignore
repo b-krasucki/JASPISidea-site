@@ -2,7 +2,6 @@
 dist/
 .output/
 doc/
-assets/showtime/*
 
 # lighthouse reports
 lh-*.json
@@ -29,3 +28,6 @@ yarn-error.log*
 Thumbs.db
 .vscode/
 .idea/
+
+# media
+assets/showtime/*
