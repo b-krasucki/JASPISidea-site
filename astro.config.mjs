@@ -8,8 +8,8 @@ export default defineConfig({
   server: {
     host: true,
   },
-  // TODO: ustawić finalną domenę po decyzji klientki (potrzebne dla sitemap/SEO/OG)
-  site: 'https://https://sales-suggested-riders-cruises.trycloudflare.com',
+  // ustawić finalną domenę po decyzji klientki (potrzebne dla sitemap/SEO/OG)
+  site: 'https://jaspis-idea.com',
   output: 'static',
   integrations: [sitemap()],
   i18n: {
