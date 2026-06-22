@@ -1,7 +1,7 @@
 {
   "site": {
     "brand": "Jaspis Idea",
-    "tagline": "Dwa światy, jedna ręka.",
+    "tagline": "Przestrzeń i obraz - Dwa światy, jedna ręka.",
     "description": "Portfolio Katarzyny Krasuckiej (Jaspis Idea) — projektowanie wnętrz i sztuka: malarstwo, meble, dekoracje, malarstwo ścienne i rysunki."
   },
   "nav": {
@@ -57,16 +57,20 @@
     "inne": "Inne"
   },
   "home": {
-    "heroEyebrow": "Projektowanie wnętrz · Sztuka",
-    "heroLine1": "Dwa światy,",
-    "heroLine2": "jedna ręka.",
-    "heroIntro": "Wnętrza i sztuka tworzone z jednej wrażliwości — od spokojnych renderów po świecące malarstwo ścienne.",
+    "heroEyebrow": "Artystka · Projektantka wnętrz",
+    "heroLine1": "Przestrzeń i obraz - ",
+    "heroLine2": "dwa światy, jedna ręka.",
+    "heroIntro": "Projektowanie wnętrz oraz sztuka - malarstwo, meble i przedmioty, które wnoszą kolor do cichej przestrzeni.",
     "heroCta": "Porozmawiajmy",
     "pillarsEyebrow": "Dwa filary",
     "pillarInteriorsTitle": "Projektowanie wnętrz",
-    "pillarInteriorsDesc": "Przestrzenie ciepłe i przemyślane — mieszkania, domy i wnętrza komercyjne.",
+    "pillarInteriorsDesc": "Spokojne, ciepłe wnętrza tworzone z uwagą na światło,",
+    "pillarInteriorsDescAccent": "materiał i proporcję.",
+    "pillarInteriorsCaption": "",
     "pillarArtTitle": "Sztuka",
-    "pillarArtDesc": "Malarstwo, meble, dekoracje, malarstwo ścienne i rysunki — w tym świecące realizacje UV.",
+    "pillarArtDesc": "Malarstwo olejne i UV, meble, dekoracje i rysunki — prace",
+    "pillarArtDescAccent": "pełne charakteru.",
+    "pillarArtCaption": "",
     "selectedEyebrow": "Wybrane prace",
     "selectedTitle": "Kuratorowany wybór",
     "selectedIntro": "Sześć realizacji z różnych obszarów, 2022–2025.",
@@ -86,7 +90,7 @@
   "artPage": {
     "title": "Sztuka",
     "eyebrow": "Sztuka",
-    "intro": "Pięć obszarów praktyki artystycznej. Wybierz kategorię, by zobaczyć prace.",
+    "intro": "Sześć obszarów praktyki artystycznej. Wybierz kategorię, by zobaczyć prace.",
     "works": "prac"
   },
   "projectMeta": {

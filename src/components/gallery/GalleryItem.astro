@@ -18,6 +18,8 @@ interface Props {
   group?: string;
   /** aspect-ratio CSS, np. "4/3", "1/1", "3/4". */
   aspect?: string;
+  /** Stała wysokość kontenera obrazu (nadpisuje aspect). Np. "clamp(280px,44vw,520px)". */
+  imgHeight?: string;
   class?: string;
   /** URL do pliku mp4 w /public/videos/ — wyświetla odtwarzacz poniżej miniatury. */
   video?: string;
@@ -29,7 +31,7 @@ const t = useTranslations(lang);
 const {
   title, meta, tint, cover, alt, isUV = false,
   href, lightbox = false, group = 'default', aspect = '4/3', class: className = '',
-  video,
+  video, imgHeight,
 } = Astro.props;
 
 // Pełnowymiarowy URL do lightboxa (gdy jest realny obraz)
@@ -52,7 +54,7 @@ const slotLabel = `${t('common.photoSlot')} — ${title}`;
       ...(lbSrc ? { 'data-lb-src': lbSrc } : {}),
     } : {}}
     class="relative block w-full overflow-hidden border border-line transition-colors duration-300 hover:border-accent"
-    style={`aspect-ratio:${aspect}`}
+    style={imgHeight ? `height:${imgHeight}` : `aspect-ratio:${aspect}`}
     aria-label={!video && (href || lightbox) ? title : undefined}
   >
     {cover ? (

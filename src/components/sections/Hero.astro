@@ -1,5 +1,4 @@
 ---
-import Button from '@/components/ui/Button.astro';
 import { useTranslations, defaultLang, type Lang } from '@/i18n/utils';
 const lang = (Astro.currentLocale ?? defaultLang) as Lang;
 const t = useTranslations(lang);
@@ -11,10 +10,8 @@ const t = useTranslations(lang);
     <span class="block">{t('home.heroLine1')}</span>
     <span class="block italic font-normal">{t('home.heroLine2')}</span>
   </h1>
-  <p class="mt-8 max-w-xl text-[16px] leading-relaxed text-ink-muted" data-reveal>
+  <p class="mt-8 max-w-[520px] text-[16px] leading-relaxed text-ink-muted" data-reveal>
     {t('home.heroIntro')}
   </p>
-  <div class="mt-10" data-reveal>
-    <Button href="/kontakt">{t('home.heroCta')}</Button>
-  </div>
+  <div class="mt-12 w-px h-14 bg-ink-muted/30" data-reveal aria-hidden="true"></div>
 </section>

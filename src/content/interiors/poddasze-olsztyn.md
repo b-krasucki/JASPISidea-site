@@ -25,6 +25,8 @@ gallery:
     alt: "Pokój Tosi, widok 3 — Poddasze Olsztyn"
   - src: ../photos/interiors/poddasze-olsztyn/render-06.png
     alt: "Widok ogólny — Poddasze Olsztyn"
+  - src: ../photos/interiors/poddasze-olsztyn/xtra-03-gucio-zabudowa.png
+    alt: "Projekt zabudowy — Poddasze Olsztyn"
 description: "Poddasze w domu jednorodzinnym pod Olsztynem. Bogata tapeta, drewno i starannie dobrane oświetlenie tworzą wnętrze z klimatem."
 featured: false
 ---
