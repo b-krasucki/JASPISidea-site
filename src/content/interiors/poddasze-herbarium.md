@@ -27,7 +27,7 @@ gallery:
     alt: "Detal 2 w wersji 4 — Poddasze Herbarium"
   - src: ../photos/interiors/poddasze-herbarium/v4-007.jpg
     alt: "Detal 3 z ludźmi w wersji 4 — Poddasze Herbarium"
-video: /videos/poddasze.mp4
+video: https://media.jaspis-idea.com/poddasze.mp4
 description: "Projekt poddasza w stylistyce Herbarium — otwarta przestrzeń z ekspozycją więźby dachowej, jasna paleta i miękkie detale."
 featured: true
 order: 2

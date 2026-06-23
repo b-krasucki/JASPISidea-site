@@ -4,7 +4,7 @@ category: "meble"
 year: 2025
 cover: ../photos/artworks/meble/lips-cover.png
 alt: "Mebel Lips — organiczna forma inspirowaną ustą"
-video: https://jaspis-idea.com/video/lips.mp4
+video: https://media.jaspis-idea.com/lips.mp4
 description: "Lips — autorski mebel o organicznej, rzeszeźbiarskiej formie. Projekt z serii JASPISidea Furniture."
 featured: false
 ---

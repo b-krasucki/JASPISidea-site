@@ -7,7 +7,7 @@ alt: "Mebel Kiss — autorski projekt z zaokrąglonymi formami"
 gallery:
   - src: ../photos/artworks/meble/kiss-uzytkowa.jpg
     alt: "Kiss — zdjęcie użytkowe"
-video: https://jaspis-idea.com/video/kiss.mp4
+video: https://media.jaspis-idea.com/kiss.mp4
 description: "Autorski mebel Kiss — miękka, zmysłowa forma inspirowana naturą. Dostępny w wybranych wykończeniach."
 featured: true
 order: 3

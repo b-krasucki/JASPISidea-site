@@ -100,6 +100,14 @@ const workSchema = {
         ))}
       </div>
     )}
+
+    {data.video && (
+      <div class="mt-8 overflow-hidden border border-line">
+        <video controls preload="none" class="w-full block bg-ink">
+          <source src={data.video} type="video/mp4" />
+        </video>
+      </div>
+    )}
   </article>
 
   {hasGallery && <Lightbox />}

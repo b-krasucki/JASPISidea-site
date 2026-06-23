@@ -4,7 +4,7 @@ year: 2024
 category: "mieszkanie"
 location: "Warszawa"
 scope: ["Projekt wnętrz", "Projekt mebli", "Nadzór realizacji"]
-cover: ../photos/interiors/herbarium-realizacja/003.jpg
+cover: ../photos/interiors/herbarium-realizacja/032.jpg
 alt: "Salon Herbarium po realizacji — naturalne materiały i zielone akcenty"
 gallery:
   - src: ../photos/interiors/herbarium-realizacja/004.jpg
